@@ -24,7 +24,6 @@
           type: "get",
           dataType: "jsonp",
           success: function(response) {
-            console.log(response);
             var loc = new google.maps.LatLng(response.iss_position.latitude, response.iss_position.longitude);
             map.setCenter(loc);
           }
@@ -34,7 +33,7 @@
       $(document).ready(function() {
           map = new google.maps.Map(document.getElementById('map'), {
             center: new google.maps.LatLng(40.722851,-73.954049),
-            zoom: 3,
+            zoom: 4,
             mapTypeId: google.maps.MapTypeId.SATELLITE
           });
 
