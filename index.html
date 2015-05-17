@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Where is the ISS?</title>
+     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0zOQiIPldpu0A8O7A1XWyws3bwyF0Nl8&sensor=false&libraries=visualization"></script>
+     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+     <style>
+       html, body { width: 100%; height: 100%; margin: 0px; }
+     </style>
+  </head>
+  <body>
+    <div id="map" style="width:100%;height:100%;">
+    </div>
+
+    <script>
+
+      var map;
+
+      function updateLocation() {
+        $.ajax({
+          url: "http://api.open-notify.org/iss-now.json",
+          type: "get",
+          dataType: "jsonp",
+          success: function(response) {
+            console.log(response);
+            var loc = new google.maps.LatLng(response.iss_position.latitude, response.iss_position.longitude);
+            map.setCenter(loc);
+          }
+        });
+      };
+
+      $(document).ready(function() {
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: new google.maps.LatLng(40.722851,-73.954049),
+            zoom: 3,
+            mapTypeId: google.maps.MapTypeId.SATELLITE
+          });
+
+          updateLocation();
+          setInterval(function() {
+            updateLocation();
+          }, 5000);
+      });
+    </script>
+  </body>
+</html>
